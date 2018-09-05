@@ -10,7 +10,7 @@
 //		HResult_PARAM_NULL (0x00110000)     | Any of the input parameters is NULL;
 //                          0x00110001      | Any of the input parameters is empty;
 //                          0x00110002      | Any of the input parameters is too long (over 240 characters);
-//      HResult_FILE_NOTEXISTS (0x00130001) | Any of the input parameters is not exist as file path.
+//      HResult_FILE_NOTEXISTS (0x00130001) | Any of the input parameters is not exist as folder path.
 //      HResult_FILE_CannotRead (0x00130002)| The path of in_folder cannot be read.
 //      HResult_FILE_CannotWrite 0x00130004 | The path of out_folder cannot be written.
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)

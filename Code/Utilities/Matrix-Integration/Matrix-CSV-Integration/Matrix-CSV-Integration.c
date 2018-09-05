@@ -16,8 +16,8 @@
     #define IN__PATH "D:\\Pub\\Test"
     #define OUT_PATH "D:\\Pub\\TEST_Out"
 #else
-    #define IN__PATH "~/test_folders/in"
-    #define OUT_PATH "~/test_folders/out"
+    #define IN__PATH "/home/yaping/test_folders/in"
+    #define OUT_PATH "/home/yaping/test_folders/out"
 #endif
 
 
