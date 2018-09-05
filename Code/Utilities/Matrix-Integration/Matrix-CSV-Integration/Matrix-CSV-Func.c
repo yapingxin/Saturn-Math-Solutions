@@ -116,5 +116,28 @@ EXIT:
 
 static void lookup_subfiles_callback(const char* filename, void* data)
 {
+    const char* expected_ext = ".csv";
+    const size_t expected_ext_len = strlen(expected_ext);
+    size_t filename_len = 0;
+    
+    if (!filename)
+    {
+        goto EXIT;
+    }
+
+    filename_len = strlen(filename);
+    if (filename_len <= expected_ext_len)
+    {
+        goto EXIT;
+    }
+
+    if (strnicmp(filename + filename_len - expected_ext_len, expected_ext, expected_ext_len) != 0)
+    {
+        goto EXIT;
+    }
+
     printf("Filename: %s\n", filename);
+
+EXIT:
+    return;
 }

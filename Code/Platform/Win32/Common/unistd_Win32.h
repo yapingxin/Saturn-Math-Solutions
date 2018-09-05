@@ -47,6 +47,7 @@
 // Linux MAN: https://linux.die.net/man/3/strncasecmp
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
+#define strnicmp _strnicmp
 
 
 /* read, write, and close are NOT being #defined here, because while there 
