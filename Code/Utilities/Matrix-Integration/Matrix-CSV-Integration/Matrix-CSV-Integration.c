@@ -8,6 +8,7 @@
 	#endif
 #endif
 
+#include <stdio.h>
 #include "Common/datatypes.h"
 
 
