@@ -70,6 +70,7 @@ typedef uint32_t HResult;
 #define HResult_FILE_NOTEXISTS      0x00130001
 #define HResult_FILE_CannotRead     0x00130002
 #define HResult_FILE_CannotWrite    0x00130004
+#define HResult_DIR_LOOKUP_FAILED   0x00130008
 #define HResult_FILE_OPEN_FAIL      0x00140000
 #define HResult_SQLite3OpenFail     0x00140001
 #define HResult_FILE_READ_FAIL      0x00150000

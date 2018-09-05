@@ -1,5 +1,7 @@
 #include "Matrix-CSV-Func.h"
 #include "Common/datatypes.h"
+#include "Common/FileOperation.h"
+#include "Common/DS/vector.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,15 +10,18 @@
 
 static HResult check_in_out_folder(const char* in_folder, const char* out_folder);
 
+static void lookup_subfiles_callback(const char* filename, void* data);
+
 
 // Return values:
-//	    HResult_OK (1)                      | Success;
-//		HResult_PARAM_NULL (0x00110000)     | Any of the input parameters is NULL;
-//                          0x00110001      | Any of the input parameters is empty;
-//                          0x00110002      | Any of the input parameters is too long (over 240 characters);
-//      HResult_FILE_NOTEXISTS (0x00130001) | Any of the input parameters is not exist as folder path.
-//      HResult_FILE_CannotRead (0x00130002)| The path of in_folder cannot be read.
-//      HResult_FILE_CannotWrite 0x00130004 | The path of out_folder cannot be written.
+//	    HResult_OK                         1 | Success;
+//		HResult_PARAM_NULL        0x00110000 | Any of the input parameters is NULL;
+//                                0x00110001 | Any of the input parameters is empty;
+//                                0x00110002 | Any of the input parameters is too long (over 240 characters);
+//      HResult_FILE_NOTEXISTS    0x00130001 | Any of the input parameters is not exist as folder path;
+//      HResult_FILE_CannotRead   0x00130002 | The path of in_folder cannot be read;
+//      HResult_FILE_CannotWrite  0x00130004 | The path of out_folder cannot be written;
+//      HResult_DIR_LOOKUP_FAILED 0x00130008 | Failed when lookup the path of in_folder for files;
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 {
 	HResult rc = HResult_OK;
@@ -26,6 +31,14 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
     {
+        // will get the error code defined for function check_in_out_folder()
+        goto EXIT;
+    }
+
+    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, NULL);
+    if (rc != HResult_OK)
+    {
+        // will get the error code HResult_DIR_LOOKUP_FAILED
         goto EXIT;
     }
 
@@ -98,4 +111,10 @@ static HResult check_in_out_folder(const char* in_folder, const char* out_folder
 
 EXIT:
     return rc;
+}
+
+
+static void lookup_subfiles_callback(const char* filename, void* data)
+{
+    printf("Filename: %s\n", filename);
 }

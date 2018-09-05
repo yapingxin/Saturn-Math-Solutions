@@ -68,3 +68,54 @@ const char* get_file_extension(const char *filepath)
 		return filepath + (size_t)(ext_pos - (char*)filepath);
 	}
 }
+
+
+
+// Return values:
+//      HResult_OK                  | Success
+//      HResult_DIR_LOOKUP_FAILED   | Failed
+HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, void* data)
+{
+    HResult rc = HResult_OK;
+    struct dirent *ptr;
+    DIR *dir = NULL;
+
+    dir = opendir(folder);
+    if (dir == NULL)
+    {
+        rc = HResult_DIR_LOOKUP_FAILED;
+        goto EXIT;
+    }
+
+    while ((ptr = readdir(dir)) != NULL)
+    {
+        // ignore "." and ".."
+        if (ptr->d_name[0] == '.')
+        {
+//#ifdef _WIN32
+            free(ptr);
+//#endif
+            continue;
+        }
+
+        if (ptr->d_type == DT_REG)
+        {
+            if (callback)
+            {
+                callback(ptr->d_name, data);
+            }
+        }
+
+//#ifdef _WIN32
+        free(ptr);
+//#endif
+
+    }
+
+EXIT:
+    if (dir)
+    {
+        closedir(dir);
+    }
+    return rc;
+}

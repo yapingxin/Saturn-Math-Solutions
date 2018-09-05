@@ -3,6 +3,13 @@
 
 #include "datatypes.h"
 
+typedef void (*lookup_dir_file_callback)(const char* filename, void* data);
+
+// Return values:
+//      HResult_OK      | Success
+//      HResult_FAILED  | Failed
+HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, void* data);
+
 /* returns UInt32_NOP on error. */
 size_t get_filesize(const char* filename);
 

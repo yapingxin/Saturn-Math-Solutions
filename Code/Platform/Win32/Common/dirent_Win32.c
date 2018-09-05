@@ -97,11 +97,11 @@ struct dirent *readdir(DIR *d)
     //check there is file or directory
     if (FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
     {
-        dirent->d_type = 2;
+        dirent->d_type = DT_DIR;
     }
     else
     {
-        dirent->d_type = 1;
+        dirent->d_type = DT_REG;
     }
 
 EXIT:
