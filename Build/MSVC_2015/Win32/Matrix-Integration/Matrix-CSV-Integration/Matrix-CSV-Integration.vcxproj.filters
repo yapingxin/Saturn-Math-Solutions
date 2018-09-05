@@ -17,6 +17,12 @@
     <Filter Include="Common\Win32">
       <UniqueIdentifier>{e0ff1c4f-dbf8-4ffb-87bb-c5e14f12c93a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\DS">
+      <UniqueIdentifier>{fb313968-9dfc-4fe7-ad9e-1f31600f8397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\iLOG3">
+      <UniqueIdentifier>{639aaece-8671-453c-8e8c-0d5fd07e00c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.c">
@@ -36,6 +42,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\Code\Common\FileOperation.c">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\DS\vector.c">
+      <Filter>Common\DS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOG.c">
+      <Filter>Common\iLOG3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.c">
+      <Filter>Common\iLOG3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.c">
+      <Filter>Common\iLOG3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +80,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Common\FileOperation.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\DS\vector.h">
+      <Filter>Common\DS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOG.h">
+      <Filter>Common\iLOG3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.h">
+      <Filter>Common\iLOG3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.h">
+      <Filter>Common\iLOG3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -61,6 +61,10 @@ MESSAGE(STATUS "")
 SET ( SRC_LIST_Matrix_CSV_Integration
 
     Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.c
+    Code/Common/DS/vector.c
+    Code/Common/iLOG3/LOG.c
+    Code/Common/iLOG3/LOGC.c
+    Code/Common/iLOG3/LOGS.c
     Code/Common/common_functions.c
     Code/Common/FileOperation.c
 )
