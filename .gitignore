@@ -53,3 +53,6 @@ dkms.conf
 /Build/MSVC_2015/Win32/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.vcxproj.user
 /Build/MSVC_2015/Win32/IntDir
 /Build/MSVC_2015/Win32/Output
+/Build/MSVC_2015/Saturn-Math-Solutions.VC.db
+/Build/MSVC_2015/Saturn-Math-Solutions.VC.VC.opendb
+/Build/MSVC_2015/.vs
