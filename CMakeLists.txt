@@ -48,7 +48,7 @@ INCLUDE_DIRECTORIES(
 )
 
 
-
+###########################################################################################################################
 # Project: Matrix-CSV-Integration
 
 MESSAGE(STATUS "")
@@ -58,9 +58,11 @@ MESSAGE(STATUS "======================================================")
 MESSAGE(STATUS "")
 
 # Project Matrix-CSV-Integration source code list - cross platform
-SET ( SRC_LIST_Matrix_CSV_Integration
+# SRC_LIST_Matrix_CSV_Integration comes from SRC_LIST_Matrix_CSV_SHARDLIB
+SET ( SRC_LIST_Matrix_CSV_SHARDLIB
 
-    Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.c
+    
+    Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Common.c
     Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Func.c
     Code/Common/DS/vector.c
     
@@ -75,24 +77,34 @@ SET ( SRC_LIST_Matrix_CSV_Integration
 
 # Project PHM-Hnode-Std-Server source code list - Win32 OS platform
 IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
-    SET ( SRC_LIST_Matrix_CSV_Integration
+    SET ( SRC_LIST_Matrix_CSV_SHARDLIB
 
         Code/Platform/Win32/Utilities/Common/stdafx.c 
         Code/Platform/Win32/Common/dirent_Win32.c
         Code/Platform/Win32/Common/iconv_Win32.c
     
-        ${SRC_LIST_Matrix_CSV_Integration}
+        ${SRC_LIST_Matrix_CSV_SHARDLIB}
     )
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 
+SET ( SRC_LIST_Matrix_CSV_Integration
+
+    Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.c
+    
+    ${SRC_LIST_Matrix_CSV_SHARDLIB}
+)
+MESSAGE(STATUS "Step 1: SRC_LIST_Matrix_CSV_SHARDLIB and SET SRC_LIST_Matrix_CSV_Integration")
+
 ADD_EXECUTABLE( Matrix-CSV-Integration ${SRC_LIST_Matrix_CSV_Integration} )
+MESSAGE(STATUS "Step 2: ADD_EXECUTABLE( Matrix-CSV-Integration ${SRC_LIST_Matrix_CSV_Integration} )")
 
 # Issue 01 :: Begin
 # For the issue: C Cmake setup - undefined reference to pow() (despite -lm)
 # Reference: https://stackoverflow.com/questions/44073120/c-cmake-setup-undefined-reference-to-pow-despite-lm
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     TARGET_LINK_LIBRARIES( Matrix-CSV-Integration m )
+    MESSAGE(STATUS "Step 3: TARGET_LINK_LIBRARIES( Matrix-CSV-Integration m )")
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 # Issue 01 :: END
 
@@ -101,3 +113,33 @@ MESSAGE(STATUS "======================================================")
 MESSAGE(STATUS "| Target Matrix-CSV-Integration (EXECUTABLE) END     |")
 MESSAGE(STATUS "======================================================")
 MESSAGE(STATUS "")
+
+###########################################################################################################################
+# Project: MatrixCsv
+
+MESSAGE(STATUS "")
+MESSAGE(STATUS "======================================================")
+MESSAGE(STATUS "| Target MatrixCsv (Shared Library) BEGIN            |")
+MESSAGE(STATUS "======================================================")
+MESSAGE(STATUS "")
+
+ADD_LIBRARY( MatrixCsv SHARED ${SRC_LIST_Matrix_CSV_SHARDLIB} )
+MESSAGE(STATUS "Step 1: ADD_LIBRARY( MatrixCsv SHARED ${SRC_LIST_Matrix_CSV_SHARDLIB} )")
+
+# Issue 01 :: Begin
+# For the issue: C Cmake setup - undefined reference to pow() (despite -lm)
+# Reference: https://stackoverflow.com/questions/44073120/c-cmake-setup-undefined-reference-to-pow-despite-lm
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    TARGET_LINK_LIBRARIES( MatrixCsv m )
+    MESSAGE(STATUS "Step 2: TARGET_LINK_LIBRARIES( MatrixCsv m )")
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+# Issue 01 :: END
+
+
+MESSAGE(STATUS "")
+MESSAGE(STATUS "======================================================")
+MESSAGE(STATUS "| Target MatrixCsv (Shared Library) END              |")
+MESSAGE(STATUS "======================================================")
+MESSAGE(STATUS "")
+
+###########################################################################################################################

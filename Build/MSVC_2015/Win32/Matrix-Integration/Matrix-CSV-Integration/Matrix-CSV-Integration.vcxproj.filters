@@ -49,6 +49,9 @@
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Func.c">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Common.c">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h">

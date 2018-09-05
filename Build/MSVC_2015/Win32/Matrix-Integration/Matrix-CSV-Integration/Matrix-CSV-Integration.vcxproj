@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.c" />
+    <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Common.c" />
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Func.c" />
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Integration.c" />
   </ItemGroup>
