@@ -92,9 +92,9 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
         // ignore "." and ".."
         if (ptr->d_name[0] == '.')
         {
-//#ifdef _WIN32
+#ifdef _WIN32
             free(ptr);
-//#endif
+#endif
             continue;
         }
 
@@ -106,9 +106,9 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
             }
         }
 
-//#ifdef _WIN32
+#ifdef _WIN32
         free(ptr);
-//#endif
+#endif
 
     }
 
