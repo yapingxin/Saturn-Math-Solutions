@@ -96,7 +96,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +110,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,7 +126,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\Code\Platform\Win32\Utilities\Common;..\..\..\..\..\Code\Platform;..\..\..\..\..\Code;..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
