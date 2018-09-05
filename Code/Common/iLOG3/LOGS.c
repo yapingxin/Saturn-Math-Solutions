@@ -116,7 +116,7 @@ int AddLogToLogs( LOGS *gs , char *g_id , LOG *g )
 	{
 		if( gs->g_id[g_no] == NULL && gs->g[g_no] == NULL )
 		{
-			gs->g_id[g_no] = _strdup( g_id ) ;
+			gs->g_id[g_no] = strdup( g_id ); // <-- Replace _strdup with strdup for Linux compiling issue.
 			if( gs->g_id[g_no] == NULL )
 				return LOG_RETURN_ERROR_ALLOC;
 			gs->g[g_no] = g ;
