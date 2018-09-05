@@ -31,6 +31,12 @@
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.c">
       <Filter>Common\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\common_functions.c">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Common\FileOperation.c">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h">
@@ -50,6 +56,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\unistd_Win32.h">
       <Filter>Common\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\common_functions.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\FileOperation.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

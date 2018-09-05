@@ -61,6 +61,8 @@ MESSAGE(STATUS "")
 SET ( SRC_LIST_Matrix_CSV_Integration
 
     Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.c
+    Code/Common/common_functions.c
+    Code/Common/FileOperation.c
 )
 
 # Project PHM-Hnode-Std-Server source code list - Win32 OS platform
