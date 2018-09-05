@@ -3,6 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Issue #01: Fix Linux compiling issue [Begin] */
+#ifndef LONG_MAX
+#define LONG_MAX      2147483647L   // maximum (signed) long value
+#endif
+
+#ifndef LONG_MIN
+#define LONG_MIN    (-2147483647L - 1) // minimum (signed) long value
+#endif
+/* Issue #01: Fix Linux compiling issue [END] */
+
 
 /* returns UInt32_NOP on error. */
 size_t get_filesize(const char* filename)
