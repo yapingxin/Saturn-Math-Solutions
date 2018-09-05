@@ -372,7 +372,17 @@ int iterator_erase(Vector* vector, Iterator* iterator) {
 
 void iterator_increment(Iterator* iterator) {
 	assert(iterator != NULL);
-	(char*)iterator->pointer += iterator->element_size;
+	
+    // Issue #01 :: Begin
+    // The following line compile OK on MSVC2015 but failed on gcc/Linux
+    // (char*)iterator->pointer += iterator->element_size;
+
+    // compile error message:
+    // vector.c:375:27: error: lvalue required as left operand of assignment
+
+    // fix at the following:
+    iterator->pointer = (char*)iterator->pointer + iterator->element_size;
+    // Issue #01 :: END
 }
 
 void iterator_decrement(Iterator* iterator) {
