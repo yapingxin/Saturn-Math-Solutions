@@ -1,4 +1,5 @@
 #include "Matrix-CSV-Func.h"
+#include "Common/datatypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,8 +20,8 @@ static HResult check_in_out_folder(const char* in_folder, const char* out_folder
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 {
 	HResult rc = HResult_OK;
-    size_t path_len_0 = 0;
-    size_t path_len_1 = 0;
+    
+    //_finddata_t fileInfo;
 
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
