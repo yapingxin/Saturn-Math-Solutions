@@ -10,7 +10,7 @@ MESSAGE(STATUS "CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "Detecting OS platform: Linux")
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -m")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
     ADD_DEFINITIONS( -D _LINUX )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "Detecting OS platform: Windows")
@@ -84,6 +84,14 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 
 ADD_EXECUTABLE( Matrix-CSV-Integration ${SRC_LIST_Matrix_CSV_Integration} )
+
+# Issue 01 :: Begin
+# For the issue: C Cmake setup - undefined reference to pow() (despite -lm)
+# Reference: https://stackoverflow.com/questions/44073120/c-cmake-setup-undefined-reference-to-pow-despite-lm
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    TARGET_LINK_LIBRARIES( Matrix-CSV-Integration m )
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+# Issue 01 :: END
 
 MESSAGE(STATUS "")
 MESSAGE(STATUS "======================================================")
