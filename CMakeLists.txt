@@ -10,7 +10,7 @@ MESSAGE(STATUS "CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "Detecting OS platform: Linux")
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lm")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -m")
     ADD_DEFINITIONS( -D _LINUX )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "Detecting OS platform: Windows")
