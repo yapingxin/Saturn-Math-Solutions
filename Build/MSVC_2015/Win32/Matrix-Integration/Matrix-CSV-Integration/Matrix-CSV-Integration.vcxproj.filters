@@ -46,15 +46,6 @@
     <ClCompile Include="..\..\..\..\..\Code\Common\DS\vector.c">
       <Filter>Common\DS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOG.c">
-      <Filter>Common\iLOG3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.c">
-      <Filter>Common\iLOG3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.c">
-      <Filter>Common\iLOG3</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Func.c">
       <Filter>Utilities</Filter>
     </ClCompile>
@@ -86,15 +77,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Common\DS\vector.h">
       <Filter>Common\DS</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOG.h">
-      <Filter>Common\iLOG3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.h">
-      <Filter>Common\iLOG3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.h">
-      <Filter>Common\iLOG3</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Func.h">
       <Filter>Utilities</Filter>
