@@ -25,6 +25,13 @@
 	#include <sys/time.h>
     #include <dirent.h>
 
+    // Link: 
+    // http://bbs.chinaunix.net/thread-2188912-2-1.html
+    // https://stackoverflow.com/questions/5918697/undefined-reference-to-stricmp
+    // https://blog.csdn.net/ACb0y/article/details/5333334
+    #define strnicmp strncasecmp
+    #define stricmp strcasecmp
+
     #define MAX_PATH 255
     typedef uint16_t TCHAR;
 #endif
