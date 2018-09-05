@@ -29,6 +29,8 @@ int main()
     rc = matrix_add_csv(IN__PATH, OUT_PATH);
 
     printf("rc: 0x%08X\n", rc);
+    printf("Input  folder: %s\n", IN__PATH);
+    printf("Output folder: %s\n", OUT_PATH);
 
 	return 0;
 }
