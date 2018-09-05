@@ -1,7 +1,12 @@
 // Matrix-CSV-Integration.c : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+#ifdef _WIN32
+	#include "stdafx.h"
+	#ifdef HAVE_VLD
+		#include <vld.h>
+	#endif
+#endif
 
 
 int main()
