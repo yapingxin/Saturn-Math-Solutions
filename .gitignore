@@ -50,3 +50,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/Build/MSVC_2015/Win32/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Integration.vcxproj.user
