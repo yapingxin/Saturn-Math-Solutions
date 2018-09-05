@@ -8,6 +8,8 @@
 	#endif
 #endif
 
+#include "Common/datatypes.h"
+
 
 int main()
 {

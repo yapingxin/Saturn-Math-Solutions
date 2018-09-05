@@ -11,6 +11,12 @@
     <Filter Include="Utilities\Common">
       <UniqueIdentifier>{52cb16b9-f68e-4ba6-83a1-321e33b98818}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{f26d5baf-3d22-42d9-be55-fc99368a855c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Win32">
+      <UniqueIdentifier>{e0ff1c4f-dbf8-4ffb-87bb-c5e14f12c93a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.c">
@@ -19,6 +25,12 @@
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Integration.c">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.c">
+      <Filter>Common\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.c">
+      <Filter>Common\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h">
@@ -26,6 +38,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\targetver.h">
       <Filter>Utilities\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Common\datatypes.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.h">
+      <Filter>Common\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.h">
+      <Filter>Common\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\unistd_Win32.h">
+      <Filter>Common\Win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

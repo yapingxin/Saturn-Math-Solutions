@@ -157,10 +157,16 @@
     <Text Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.c" />
+    <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.c" />
     <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Integration.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Code\Common\datatypes.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\unistd_Win32.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\targetver.h" />
   </ItemGroup>
