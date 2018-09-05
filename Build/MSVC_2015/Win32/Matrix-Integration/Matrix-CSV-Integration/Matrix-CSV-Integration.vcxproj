@@ -176,6 +176,7 @@
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\unistd_Win32.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\targetver.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Common.h" />
     <ClInclude Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\Matrix-CSV-Func.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

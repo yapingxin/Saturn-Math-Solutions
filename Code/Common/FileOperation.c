@@ -119,3 +119,55 @@ EXIT:
     }
     return rc;
 }
+
+
+
+// Return values:
+//	    HResult_OK                         1 | Success;
+//		HResult_PARAM_NULL        0x00110000 | Any of the input parameters is NULL;
+//      HResult_PARAM_NULL | 1    0x00110001 | The input parameter path or filename is empty;
+HResult path_filename_combine(char* fullpath_buf, const char* path, const char* filename)
+{
+    static const char dir_separator_1 = '/';
+    static const char dir_separator_2 = '\\';
+
+    HResult rc = HResult_OK;
+    size_t path_len_0 = 0;
+    size_t path_len_1 = 0;
+    char* dir_split_pos_1 = NULL;
+    char* dir_split_pos_2 = NULL;
+    char* dir_split_pos = NULL;
+    char split_ch = '\0';
+
+    if (fullpath_buf == NULL || path == NULL || filename == NULL)
+    {
+        rc = HResult_PARAM_NULL;
+        goto EXIT;
+    }
+
+    path_len_0 = strlen(path);
+    path_len_1 = strlen(filename);
+
+    if (path_len_0 == 0 || path_len_1 == 0)
+    {
+        rc = HResult_PARAM_NULL | 1;
+        goto EXIT;
+    }
+
+    dir_split_pos_1 = strrchr(path, dir_separator_1);
+    dir_split_pos_2 = strrchr(path, dir_separator_2);
+    dir_split_pos = dir_split_pos_2 > dir_split_pos_1 ? dir_split_pos_2 : dir_split_pos_1;
+
+    strcpy(fullpath_buf, path);
+
+    if (dir_split_pos != (path + path_len_0 - 1))
+    {
+        split_ch = dir_split_pos[0];
+        fullpath_buf[path_len_0] = split_ch;
+    }
+
+    strcat(fullpath_buf, filename);
+
+EXIT:
+    return rc;
+}

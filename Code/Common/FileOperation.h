@@ -16,4 +16,10 @@ size_t get_filesize(const char* filename);
 bool is_file_exist(const char* filepath);
 const char* get_file_extension(const char *filepath);
 
+// Return values:
+//	    HResult_OK                         1 | Success;
+//		HResult_PARAM_NULL        0x00110000 | Any of the input parameters is NULL;
+//      HResult_PARAM_NULL | 1    0x00110001 | The input parameter path or filename is empty;
+HResult path_filename_combine(char* fullpath_buf, const char* path, const char* filename);
+
 #endif // !_INC_CLANG_COMMON_FileOperation_H

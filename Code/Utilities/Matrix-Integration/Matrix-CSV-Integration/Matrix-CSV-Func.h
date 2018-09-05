@@ -1,7 +1,11 @@
 #ifndef _INC_UTILITIES_Matrix_CSV_Integration_Matrix_CSV_Func_H
 #define _INC_UTILITIES_Matrix_CSV_Integration_Matrix_CSV_Func_H
 
-#include "Common/datatypes.h"
+// !!! Notice !!!
+// For DSP C2000 serial chip, please use uint16_t as HResult
+#ifndef HResult
+#define HResult unsigned int
+#endif
 
 #define MAX_FOLDER_LEN  240
 
