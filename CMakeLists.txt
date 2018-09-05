@@ -67,9 +67,9 @@ SET ( SRC_LIST_Matrix_CSV_Integration
 IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     SET ( SRC_LIST_Matrix_CSV_Integration
 
-        Code/Platform/Win32/Utilities/Common/stdafx.cpp 
-        Code/Platform/Win32/OsacbmLib/Common/dirent_Win32.cpp 
-        Code/Platform/Win32/OsacbmLib/Common/iconv_Win32.cpp
+        Code/Platform/Win32/Utilities/Common/stdafx.c 
+        # Code/Platform/Win32/OsacbmLib/Common/dirent_Win32.cpp 
+        # Code/Platform/Win32/OsacbmLib/Common/iconv_Win32.cpp
     
         ${SRC_LIST_Matrix_CSV_Integration}
     )
