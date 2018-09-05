@@ -7,6 +7,15 @@
 #include <string.h>
 #include <errno.h>
 
+#define FILENAME_BUF_SIZE   256
+#define FILENAME_VEC_PRECAP 16
+
+
+typedef struct
+{
+    char data[FILENAME_BUF_SIZE];
+} FileName;
+
 
 static HResult check_in_out_folder(const char* in_folder, const char* out_folder);
 
@@ -22,11 +31,14 @@ static void lookup_subfiles_callback(const char* filename, void* data);
 //      HResult_FILE_CannotRead   0x00130002 | The path of in_folder cannot be read;
 //      HResult_FILE_CannotWrite  0x00130004 | The path of out_folder cannot be written;
 //      HResult_DIR_LOOKUP_FAILED 0x00130008 | Failed when lookup the path of in_folder for files;
+//      HResult_OBJECT_IS_NULL|1  0x00190001 | Lookup in_folder but no .csv file found;
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 {
 	HResult rc = HResult_OK;
     
-    //_finddata_t fileInfo;
+    Vector vector;
+    size_t i;
+    FileName* p_FileName;
 
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
@@ -35,12 +47,28 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         goto EXIT;
     }
 
-    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, NULL);
+    vector_setup(&vector, FILENAME_VEC_PRECAP, sizeof(FileName));
+
+    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, &vector);
     if (rc != HResult_OK)
     {
         // will get the error code HResult_DIR_LOOKUP_FAILED
         goto EXIT;
     }
+
+    if (vector.size == 0)
+    {
+        rc = HResult_OBJECT_IS_NULL + 1;
+    }
+
+    for (i = 0; i < vector.size; i++)
+    {
+        p_FileName = (FileName*)vector_get(&vector, i);
+        printf("Lookup file: %s\n", p_FileName->data);
+    }
+
+    vector_clear(&vector);
+    vector_destroy(&vector);
 
 EXIT:
 	return rc;
@@ -119,15 +147,25 @@ static void lookup_subfiles_callback(const char* filename, void* data)
     const char* expected_ext = ".csv";
     const size_t expected_ext_len = strlen(expected_ext);
     size_t filename_len = 0;
+    Vector* vector;
+    FileName filename_st;
     
-    if (!filename)
+    if (filename == NULL || data == NULL)
     {
         goto EXIT;
     }
 
+    vector = (Vector*)data;
+
     filename_len = strlen(filename);
     if (filename_len <= expected_ext_len)
     {
+        goto EXIT;
+    }
+
+    if (filename_len >= FILENAME_BUF_SIZE)
+    {
+        // Error: File name is too long
         goto EXIT;
     }
 
@@ -136,7 +174,10 @@ static void lookup_subfiles_callback(const char* filename, void* data)
         goto EXIT;
     }
 
-    printf("Filename: %s\n", filename);
+    memset(&filename_st, 0, sizeof(FileName));
+    strncpy(filename_st.data, filename, filename_len);
+
+    vector_push_back(vector, &filename_st);
 
 EXIT:
     return;
