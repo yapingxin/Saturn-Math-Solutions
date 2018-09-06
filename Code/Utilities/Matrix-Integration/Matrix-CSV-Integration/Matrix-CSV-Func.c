@@ -29,12 +29,12 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 	HResult rc = HResult_OK;
     HResult decode_rc= HResult_OK;
     
-    Vector vector;
+    Vector vector_filepath;
+    Vector vector_decode_info;
     size_t i;
     FileName* p_FileName;
     FullPath fullpath;
-
-    CSV_Parse_Info decode_info;
+    CSV_Parse_Info* p_decode_info = NULL;
 
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
@@ -43,36 +43,58 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         goto EXIT;
     }
 
-    vector_setup(&vector, FILENAME_VEC_PRECAP, sizeof(FileName));
+    vector_setup(&vector_filepath, FILENAME_VEC_PRECAP, sizeof(FileName));
 
-    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, &vector);
+    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, &vector_filepath);
     if (rc != HResult_OK)
     {
         // will get the error code HResult_DIR_LOOKUP_FAILED
         goto EXIT;
     }
 
-    if (vector.size == 0)
+    if (vector_filepath.size == 0)
     {
         rc = HResult_OBJECT_IS_NULL + 1;
     }
 
-    for (i = 0; i < vector.size; i++)
+    vector_setup(&vector_decode_info, vector_filepath.size, sizeof(CSV_Parse_Info));
+
+    for (i = 0; i < vector_filepath.size; i++)
     {
-        p_FileName = (FileName*)vector_get(&vector, i);
+        p_FileName = (FileName*)vector_get(&vector_filepath, i);
         
         memset(&fullpath, 0, sizeof(FullPath));
         path_filename_combine(fullpath.data, in_folder, p_FileName->data);
 
-        memset(&decode_info, 0, sizeof(CSV_Parse_Info));
-        decode_rc = Create_CSV_Parse_Info(&decode_info, fullpath.data);
-        CSV_Parse_Info_Cleanup(&decode_info);
+        p_decode_info = (CSV_Parse_Info*)malloc(sizeof(CSV_Parse_Info));
+        memset(p_decode_info, 0, sizeof(CSV_Parse_Info));
+
+        decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
+
+        vector_push_back(&vector_decode_info, p_decode_info);
+
+        //CSV_Parse_Info_Cleanup(p_decode_info);
+        free(p_decode_info);
 
         printf("Lookup file: %s\n", fullpath.data);
     }
 
-    vector_clear(&vector);
-    vector_destroy(&vector);
+    vector_clear(&vector_filepath);
+    vector_destroy(&vector_filepath);
+
+    
+    if (vector_decode_info.size > 0)
+    {
+        for (i = 0; i < vector_decode_info.size; i++)
+        {
+            p_decode_info = vector_get(&vector_decode_info, i);
+            CSV_Parse_Info_Cleanup(p_decode_info);
+        }
+    }
+    
+
+    vector_clear(&vector_decode_info);
+    vector_destroy(&vector_decode_info);
 
 EXIT:
 	return rc;
