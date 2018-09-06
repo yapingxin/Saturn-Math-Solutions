@@ -56,6 +56,8 @@ HResult Create_CSV_Parse_Info(CSV_Parse_Info* decode_data, const char* csv_path)
         goto EXIT;
     }
 
+    printf("[Create_CSV_Parse_Info()] csv_path: %s\n", csv_path);
+
     // get file size
     fseek(pFile, 0, SEEK_END);
     file_seek_len = ftell(pFile);
