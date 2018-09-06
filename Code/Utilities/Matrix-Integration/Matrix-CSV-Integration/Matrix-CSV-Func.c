@@ -12,7 +12,7 @@
 static HResult check_in_out_folder(const char* in_folder, const char* out_folder);
 static void lookup_subfiles_callback(const char* filename, void* data);
 static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src);
-static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder);
+static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder);
 
 
 // Return values:
@@ -115,7 +115,7 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         }
     }
 
-    matrix_save(p_result_matrix, out_folder);
+    rc = matrix_save(p_result_matrix, out_folder);
 
 EXIT_VEC_RESOURCES:
     
@@ -262,8 +262,13 @@ static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src)
 }
 
 
-static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
+// Return values:
+//	    HResult_OK                         1 | Success;
+//		HResult_FILE_OPEN_FAIL    0x00140001 | Any of the input parameters is NULL;
+
+static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
 {
+    HResult rc = HResult_OK;
     FILE* pFile;
     FullPath fullpath;
     uint32_t iRow;
@@ -273,6 +278,12 @@ static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
     path_filename_combine(fullpath.data, out_folder, "Result.csv");
 
     pFile = fopen(fullpath.data, "w+");
+    if (!pFile)
+    {
+        rc = HResult_FILE_OPEN_FAIL + 1;
+        goto EXIT;
+    }
+
 
     for (iRow = 0; iRow < p_csv_matrix->rows; iRow++)
     {
@@ -296,4 +307,8 @@ static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
     }
 
     fclose(pFile);
+
+EXIT:
+    return rc;
 }
+
