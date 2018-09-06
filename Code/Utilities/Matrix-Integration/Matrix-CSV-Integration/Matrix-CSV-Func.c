@@ -76,7 +76,7 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 
         decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
 
-        printf("[i: %ld] p_decode_info | cols: %ld, rows: %ld\n", i, p_decode_info->cols, p_decode_info->rows);
+        printf("[i: %ld] p_decode_info | cols: %d, rows: %d\n", i, p_decode_info->cols, p_decode_info->rows);
 
         if (p_result_matrix->elems_count == 0)
         {
