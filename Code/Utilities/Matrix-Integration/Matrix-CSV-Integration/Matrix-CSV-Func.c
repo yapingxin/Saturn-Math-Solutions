@@ -27,11 +27,14 @@ static void lookup_subfiles_callback(const char* filename, void* data);
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 {
 	HResult rc = HResult_OK;
+    HResult decode_rc= HResult_OK;
     
     Vector vector;
     size_t i;
     FileName* p_FileName;
     FullPath fullpath;
+
+    CSV_Parse_Info decode_info;
 
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
@@ -60,6 +63,10 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         
         memset(&fullpath, 0, sizeof(FullPath));
         path_filename_combine(fullpath.data, in_folder, p_FileName->data);
+
+        memset(&decode_info, 0, sizeof(CSV_Parse_Info));
+        decode_rc = Create_CSV_Parse_Info(&decode_info, fullpath.data);
+        CSV_Parse_Info_Cleanup(&decode_info);
 
         printf("Lookup file: %s\n", fullpath.data);
     }

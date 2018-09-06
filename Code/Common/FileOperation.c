@@ -109,7 +109,6 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
 #ifdef _WIN32
         free(ptr);
 #endif
-
     }
 
 EXIT:
