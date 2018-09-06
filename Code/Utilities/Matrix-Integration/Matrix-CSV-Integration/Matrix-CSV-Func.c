@@ -10,8 +10,9 @@
 
 
 static HResult check_in_out_folder(const char* in_folder, const char* out_folder);
-
 static void lookup_subfiles_callback(const char* filename, void* data);
+static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src);
+static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder);
 
 
 // Return values:
@@ -26,15 +27,16 @@ static void lookup_subfiles_callback(const char* filename, void* data);
 //      HResult_OBJECT_IS_NULL|1  0x00190001 | Lookup in_folder but no .csv file found;
 HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 {
-	HResult rc = HResult_OK;
-    HResult decode_rc= HResult_OK;
-    
+    HResult rc = HResult_OK;
+    HResult decode_rc = HResult_OK;
+
     Vector vector_filepath;
     Vector vector_decode_info;
     size_t i;
     FileName* p_FileName;
     FullPath fullpath;
     CSV_Parse_Info* p_decode_info = NULL;
+    CSV_Parse_Info* p_result_matrix = NULL;
 
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
@@ -59,10 +61,13 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 
     vector_setup(&vector_decode_info, vector_filepath.size, sizeof(CSV_Parse_Info));
 
+    p_result_matrix = (CSV_Parse_Info*)malloc(sizeof(CSV_Parse_Info));
+    memset(p_result_matrix, 0, sizeof(CSV_Parse_Info));
+
     for (i = 0; i < vector_filepath.size; i++)
     {
         p_FileName = (FileName*)vector_get(&vector_filepath, i);
-        
+
         memset(&fullpath, 0, sizeof(FullPath));
         path_filename_combine(fullpath.data, in_folder, p_FileName->data);
 
@@ -70,19 +75,56 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         memset(p_decode_info, 0, sizeof(CSV_Parse_Info));
 
         decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
+        if (p_result_matrix->elems_count == 0)
+        {
+            p_result_matrix->cols = p_decode_info->cols;
+            p_result_matrix->rows = p_decode_info->rows;
+            p_result_matrix->elems_count = p_decode_info->elems_count;
+
+            p_result_matrix->elems = malloc(p_result_matrix->elems_count * sizeof(double));
+            memset(p_result_matrix->elems, 0, p_result_matrix->elems_count * sizeof(double));
+        }
+        else
+        {
+            if (p_result_matrix->cols != p_decode_info->cols ||
+                p_result_matrix->rows != p_decode_info->rows ||
+                p_result_matrix->elems_count != p_decode_info->elems_count)
+            {
+                // for all the csv files, rows and cols is not the same.
+                rc = HResult_DECODE_FAIL;
+                free(p_decode_info);
+
+                goto EXIT_VEC_RESOURCES;
+            }
+        }
 
         vector_push_back(&vector_decode_info, p_decode_info);
 
         //CSV_Parse_Info_Cleanup(p_decode_info);
         free(p_decode_info);
 
-        printf("Lookup file: %s\n", fullpath.data);
+        //printf("Lookup file: %s\n", fullpath.data);
     }
 
+    if (vector_decode_info.size > 0)
+    {
+        for (i = 0; i < vector_decode_info.size; i++)
+        {
+            p_decode_info = vector_get(&vector_decode_info, i);
+            matrix_add(p_result_matrix, p_decode_info);
+        }
+    }
+
+    matrix_save(p_result_matrix, out_folder);
+
+EXIT_VEC_RESOURCES:
+    
+    CSV_Parse_Info_Cleanup(p_result_matrix);
+    free(p_result_matrix);
+    
     vector_clear(&vector_filepath);
     vector_destroy(&vector_filepath);
 
-    
     if (vector_decode_info.size > 0)
     {
         for (i = 0; i < vector_decode_info.size; i++)
@@ -91,13 +133,12 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
             CSV_Parse_Info_Cleanup(p_decode_info);
         }
     }
-    
 
     vector_clear(&vector_decode_info);
     vector_destroy(&vector_decode_info);
 
 EXIT:
-	return rc;
+    return rc;
 }
 
 
@@ -207,4 +248,52 @@ static void lookup_subfiles_callback(const char* filename, void* data)
 
 EXIT:
     return;
+}
+
+
+static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src)
+{
+    uint32_t index = 0;
+
+    for (index = 0; index < src->elems_count; index++)
+    {
+        dst->elems[index] += src->elems[index];
+    }
+}
+
+
+static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
+{
+    FILE* pFile;
+    FullPath fullpath;
+    uint32_t iRow;
+    uint32_t iCol;
+
+    memset(&fullpath, 0, sizeof(FullPath));
+    path_filename_combine(fullpath.data, out_folder, "Result.csv");
+
+    pFile = fopen(fullpath.data, "w+");
+
+    for (iRow = 0; iRow < p_csv_matrix->rows; iRow++)
+    {
+        for (iCol = 0; iCol < p_csv_matrix->cols; iCol++)
+        {
+            fseek(pFile, 0, SEEK_END);
+            fprintf(pFile, "%f", p_csv_matrix->elems[iRow * p_csv_matrix->cols + iCol]);
+
+            if (iCol < p_csv_matrix->cols - 1)
+            {
+                fseek(pFile, 0, SEEK_END);
+                fprintf(pFile, ",");
+            }
+        }
+
+        fseek(pFile, 0, SEEK_END);
+        fprintf(pFile, "%c", 0x0D);
+
+        //fseek(pFile, 0, SEEK_END);
+        //fprintf(pFile, "%c", 0x0A);
+    }
+
+    fclose(pFile);
 }
