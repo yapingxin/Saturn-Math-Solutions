@@ -14,6 +14,13 @@ static void lookup_subfiles_callback(const char* filename, void* data);
 static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src);
 static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder);
 
+static const char* err_msg = "Demo";
+
+const char* get_latest_errmsg()
+{
+    return err_msg;
+}
+
 
 // Return values:
 //	    HResult_OK                         1 | Success;
@@ -305,8 +312,6 @@ static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
         fseek(pFile, 0, SEEK_END);
         fprintf(pFile, "%c", 0x0A);
     }
-
-    printf("=============================\n");
 
     fclose(pFile);
 

@@ -11,5 +11,7 @@
 
 HResult matrix_add_csv(const char* in_folder, const char* out_folder);
 
+const char* get_latest_errmsg();
+
 
 #endif // !_INC_UTILITIES_Matrix_CSV_Integration_Matrix_CSV_Func_H

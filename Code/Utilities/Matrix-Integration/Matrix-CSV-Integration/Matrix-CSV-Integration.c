@@ -21,16 +21,32 @@
 #endif
 
 
-int main()
+int main(int argc, char* argv[])
 {
     HResult rc = HResult_Unknown;
 
+    if (argc < 3)
+    {
+        printf("\n\nPlease provide 2 input parametes, the first one is input directory path, the second is output directory path.\n");
+        printf("Usage: Matrix-CSV-Integration <input_folder> <output_folder>\n\n");
+        printf("Abort.\n\n");
 
-    rc = matrix_add_csv(IN__PATH, OUT_PATH);
+        exit(-1);
+    }
 
-    printf("rc: 0x%08X\n", rc);
-    printf("Input  folder: %s\n", IN__PATH);
-    printf("Output folder: %s\n", OUT_PATH);
+    rc = matrix_add_csv(argv[1], argv[2]);
+    if (rc != HResult_OK)
+    {
+        printf("Error: %s\n", get_latest_errmsg());
+    }
+    else
+    {
+        printf("\n\nThe output file Result.csvm has been put into your <output_folder>.\n\n");
+    }
+
+    //printf("rc: 0x%08X\n", rc);
+    //printf("Input  folder: %s\n", IN__PATH);
+    //printf("Output folder: %s\n", OUT_PATH);
 
 	return 0;
 }
