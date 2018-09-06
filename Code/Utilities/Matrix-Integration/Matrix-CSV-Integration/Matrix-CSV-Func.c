@@ -75,6 +75,9 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
         memset(p_decode_info, 0, sizeof(CSV_Parse_Info));
 
         decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
+
+        printf("[i: %ld] p_decode_info | cols: %ld, rows: %ld\n", i, p_decode_info->cols, p_decode_info->rows);
+
         if (p_result_matrix->elems_count == 0)
         {
             p_result_matrix->cols = p_decode_info->cols;
@@ -110,7 +113,7 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
     {
         for (i = 0; i < vector_decode_info.size; i++)
         {
-            printf("[i:  %d] p_decode_info = vector_get(&vector_decode_info, i);\n", i);
+            printf("[i: %ld] p_decode_info = vector_get(&vector_decode_info, i);\n", i);
             p_decode_info = vector_get(&vector_decode_info, i);
             matrix_add(p_result_matrix, p_decode_info);
         }
