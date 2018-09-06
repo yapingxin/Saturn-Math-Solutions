@@ -28,7 +28,12 @@ int main(int argc, char* argv[])
     if (argc < 3)
     {
         printf("\n\nPlease provide 2 input parametes, the first one is input directory path, the second is output directory path.\n");
-        printf("Usage: Matrix-CSV-Integration <input_folder> <output_folder>\n\n");
+        printf("For example: \n\n");
+#ifdef _WIN32
+        printf("Usage: Matrix-CSV-Integration.exe <input_folder> <output_folder>\n\n");
+#else
+        printf("Usage: ./Matrix-CSV-Integration <input_folder> <output_folder>\n\n");
+#endif
         printf("Abort.\n\n");
 
         exit(-1);
@@ -37,16 +42,13 @@ int main(int argc, char* argv[])
     rc = matrix_add_csv(argv[1], argv[2]);
     if (rc != HResult_OK)
     {
-        printf("Error: %s\n", get_latest_errmsg());
+        printf("Error code    : 0x%08X\n", rc);
+        printf("Error message : %s\n", get_latest_errmsg());
     }
     else
     {
         printf("\n\nThe output file Result.csvm has been put into your <output_folder>.\n\n");
     }
-
-    //printf("rc: 0x%08X\n", rc);
-    //printf("Input  folder: %s\n", IN__PATH);
-    //printf("Output folder: %s\n", OUT_PATH);
 
 	return 0;
 }
