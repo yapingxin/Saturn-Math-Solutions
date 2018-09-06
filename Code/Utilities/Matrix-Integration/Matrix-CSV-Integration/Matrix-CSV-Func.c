@@ -292,6 +292,10 @@ static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
             fseek(pFile, 0, SEEK_END);
             fprintf(pFile, "%f", p_csv_matrix->elems[iRow * p_csv_matrix->cols + iCol]);
 
+            printf("p_csv_matrix->elems[%d] = %f\n",
+                iRow * p_csv_matrix->cols + iCol,
+                p_csv_matrix->elems[iRow * p_csv_matrix->cols + iCol]);
+
             if (iCol < p_csv_matrix->cols - 1)
             {
                 fseek(pFile, 0, SEEK_END);
