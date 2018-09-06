@@ -110,6 +110,7 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
     {
         for (i = 0; i < vector_decode_info.size; i++)
         {
+            printf("[i:  %d] p_decode_info = vector_get(&vector_decode_info, i);\n", i);
             p_decode_info = vector_get(&vector_decode_info, i);
             matrix_add(p_result_matrix, p_decode_info);
         }
