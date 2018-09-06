@@ -76,8 +76,6 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
 
         decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
 
-        printf("[i: %ld] p_decode_info | cols: %d, rows: %d\n", i, p_decode_info->cols, p_decode_info->rows);
-
         if (p_result_matrix->elems_count == 0)
         {
             p_result_matrix->cols = p_decode_info->cols;
@@ -113,7 +111,6 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
     {
         for (i = 0; i < vector_decode_info.size; i++)
         {
-            printf("[i: %ld] p_decode_info = vector_get(&vector_decode_info, i);\n", i);
             p_decode_info = vector_get(&vector_decode_info, i);
             matrix_add(p_result_matrix, p_decode_info);
         }
@@ -288,21 +285,12 @@ static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
         goto EXIT;
     }
 
-    printf("=============================\n");
-    printf("******** matrix_save ********\n");
-    printf("p_csv_matrix | cols: %d, rows: %d\n", p_csv_matrix->cols, p_csv_matrix->rows);
-    printf("-----------------------------\n");
-
     for (iRow = 0; iRow < p_csv_matrix->rows; iRow++)
     {
         for (iCol = 0; iCol < p_csv_matrix->cols; iCol++)
         {
             fseek(pFile, 0, SEEK_END);
             fprintf(pFile, "%f", p_csv_matrix->elems[iRow * p_csv_matrix->cols + iCol]);
-
-            printf("p_csv_matrix->elems[%d] = %f\n",
-                iRow * p_csv_matrix->cols + iCol,
-                p_csv_matrix->elems[iRow * p_csv_matrix->cols + iCol]);
 
             if (iCol < p_csv_matrix->cols - 1)
             {
