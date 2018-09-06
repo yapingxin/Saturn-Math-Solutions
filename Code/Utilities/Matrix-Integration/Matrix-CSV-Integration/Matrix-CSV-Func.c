@@ -288,11 +288,11 @@ static void matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
             }
         }
 
-        fseek(pFile, 0, SEEK_END);
-        fprintf(pFile, "%c", 0x0D);
-
         //fseek(pFile, 0, SEEK_END);
-        //fprintf(pFile, "%c", 0x0A);
+        //fprintf(pFile, "%c", 0x0D);
+
+        fseek(pFile, 0, SEEK_END);
+        fprintf(pFile, "%c", 0x0A);
     }
 
     fclose(pFile);
