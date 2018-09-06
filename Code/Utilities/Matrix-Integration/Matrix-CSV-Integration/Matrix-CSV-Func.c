@@ -284,6 +284,10 @@ static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
         goto EXIT;
     }
 
+    printf("=============================\n");
+    printf("******** matrix_save ********\n");
+    printf("p_csv_matrix | cols: %d, rows: %d\n", p_csv_matrix->cols, p_csv_matrix->rows);
+    printf("-----------------------------\n");
 
     for (iRow = 0; iRow < p_csv_matrix->rows; iRow++)
     {
@@ -309,6 +313,8 @@ static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder)
         fseek(pFile, 0, SEEK_END);
         fprintf(pFile, "%c", 0x0A);
     }
+
+    printf("=============================\n");
 
     fclose(pFile);
 
