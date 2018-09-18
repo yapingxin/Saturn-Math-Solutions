@@ -64,6 +64,7 @@ SET ( SRC_LIST_Matrix_CSV_SHARDLIB
     
     Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Common.c
     Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/Matrix-CSV-Func.c
+    Code/Utilities/Matrix-Integration/Matrix-CSV-Integration/log_settings.c
     Code/Common/DS/vector.c
     
     # iLOG3 is for pure C logging

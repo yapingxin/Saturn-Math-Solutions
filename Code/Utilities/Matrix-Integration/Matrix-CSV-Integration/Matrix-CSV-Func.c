@@ -8,6 +8,8 @@
 #include <string.h>
 #include <errno.h>
 
+#include "log_settings.h"
+
 
 static HResult check_in_out_folder(const char* in_folder, const char* out_folder);
 static void lookup_subfiles_callback(const char* filename, void* data);
@@ -15,6 +17,7 @@ static void matrix_add(CSV_Parse_Info* dst, CSV_Parse_Info* src);
 static HResult matrix_save(CSV_Parse_Info* p_csv_matrix, const char* out_folder);
 
 static const char* err_msg = "Demo";
+static bool g_verbose_mode = false;
 
 const char* get_latest_errmsg()
 {
@@ -45,11 +48,27 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
     CSV_Parse_Info* p_decode_info = NULL;
     CSV_Parse_Info* p_result_matrix = NULL;
 
+    g_verbose_mode = verbose_mode;
+
+    if (g_verbose_mode)
+    {
+        LOG_INFO("[matrix_add_csv] Step 1: check_in_out_folder() with params in_folder: [ %s ], out_folder: [ %s ]", in_folder, out_folder);
+    }
+
     rc = check_in_out_folder(in_folder, out_folder);
     if (rc != HResult_OK)
     {
-        // will get the error code defined for function check_in_out_folder()
+        if (g_verbose_mode)
+        {
+            LOG_ERROR("[matrix_add_csv] check_in_out_folder() failed with error code: 0x%08X", rc);
+        }
+
         goto EXIT;
+    }
+
+    if (g_verbose_mode)
+    {
+        LOG_INFO("[matrix_add_csv] Step 2: lookup_dir_files() with params in_folder: [ %s ]", in_folder);
     }
 
     vector_setup(&vector_filepath, FILENAME_VEC_PRECAP, sizeof(FileName));
@@ -58,12 +77,30 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
     if (rc != HResult_OK)
     {
         // will get the error code HResult_DIR_LOOKUP_FAILED
+        
+        if (g_verbose_mode)
+        {
+            LOG_ERROR("[matrix_add_csv] lookup_dir_files() failed with error code: 0x%08X", rc);
+        }
+
         goto EXIT;
     }
 
     if (vector_filepath.size == 0)
     {
         rc = HResult_OBJECT_IS_NULL + 1;
+
+        if (g_verbose_mode)
+        {
+            LOG_ERROR("[matrix_add_csv] lookup_dir_files() result: .csv file not found.");
+        }
+
+        goto EXIT_VEC_RESOURCES;
+    }
+
+    if (g_verbose_mode)
+    {
+        LOG_INFO("[matrix_add_csv] Step 3: Decoding");
     }
 
     vector_setup(&vector_decode_info, vector_filepath.size, sizeof(CSV_Parse_Info));
@@ -75,6 +112,11 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
     {
         p_FileName = (FileName*)vector_get(&vector_filepath, i);
 
+        if (g_verbose_mode)
+        {
+            LOG_INFO("[matrix_add_csv] lookup_dir_files() found file: %s", p_FileName->data);
+        }
+
         memset(&fullpath, 0, sizeof(FullPath));
         path_filename_combine(fullpath.data, in_folder, p_FileName->data);
 
@@ -82,6 +124,23 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
         memset(p_decode_info, 0, sizeof(CSV_Parse_Info));
 
         decode_rc = Create_CSV_Parse_Info(p_decode_info, fullpath.data);
+        if (decode_rc != HResult_OK)
+        {
+            rc = HResult_DECODE_FAIL;
+            free(p_decode_info);
+
+            if (g_verbose_mode)
+            {
+                LOG_ERROR("[matrix_add_csv] File decoding failed: %s", p_FileName->data);
+            }
+
+            goto EXIT_VEC_RESOURCES;
+        }
+
+        if (g_verbose_mode)
+        {
+            LOG_INFO("[matrix_add_csv] [decoding result] cols: %d, rows: %d, elems_count: %d [file: %s]", p_decode_info->cols, p_decode_info->rows, p_decode_info->elems_count, p_FileName->data);
+        }
 
         if (p_result_matrix->elems_count == 0)
         {
@@ -102,6 +161,11 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
                 rc = HResult_DECODE_FAIL;
                 free(p_decode_info);
 
+                if (g_verbose_mode)
+                {
+                    LOG_ERROR("[matrix_add_csv] File decoding failed: %s", p_FileName->data);
+                }
+
                 goto EXIT_VEC_RESOURCES;
             }
         }
@@ -114,16 +178,35 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
         //printf("Lookup file: %s\n", fullpath.data);
     }
 
+    if (g_verbose_mode)
+    {
+        LOG_INFO("[matrix_add_csv] Step 4: Calculate");
+    }
+
     if (vector_decode_info.size > 0)
     {
         for (i = 0; i < vector_decode_info.size; i++)
         {
+            if (g_verbose_mode)
+            {
+                LOG_INFO("[matrix_add_csv] matrix_add file index: %zd", i);
+            }
+
             p_decode_info = vector_get(&vector_decode_info, i);
             matrix_add(p_result_matrix, p_decode_info);
         }
     }
 
+    if (g_verbose_mode)
+    {
+        LOG_INFO("[matrix_add_csv] Step 5: Save result");
+    }
+
     rc = matrix_save(p_result_matrix, out_folder);
+    if (rc != HResult_OK)
+    {
+        LOG_ERROR("[matrix_add_csv] matrix_save failed for the folder: %s", out_folder);
+    }
 
 EXIT_VEC_RESOURCES:
 

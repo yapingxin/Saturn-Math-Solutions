@@ -61,6 +61,9 @@
     <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.c">
       <Filter>Common\iLOG3</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\log_settings.c">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.h">
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.h">
       <Filter>Common\iLOG3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Code\Utilities\Matrix-Integration\Matrix-CSV-Integration\log_settings.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

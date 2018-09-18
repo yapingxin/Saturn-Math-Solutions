@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "Common/datatypes.h"
 #include "Matrix-CSV-Func.h"
+#include "log_settings.h"
 
 #ifdef _WIN32
     #define IN__PATH "D:\\Pub\\Test"
@@ -31,7 +32,7 @@ int main(int argc, char* argv[])
         printf("\n\nPlease provide 2 input parametes, the first one is input directory path, the second is output directory path.\n");
         printf("For example: \n\n");
 #ifdef _WIN32
-        printf("Usage: Matrix-CSV-Integration.exe <input_folder> <output_folder>\n\n");
+        printf("Usage: Matrix-CSV-Integration.exe <input_folder> <output_folder> [-v]\n\n");
 #else
         printf("Usage: ./Matrix-CSV-Integration <input_folder> <output_folder> [-v]\n\n");
 #endif
@@ -40,15 +41,55 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    rc = matrix_add_csv(argv[1], argv[2], verbose_mode);
-    if (rc != HResult_OK)
+    if (argc >= 4)
     {
-        printf("Error code    : 0x%08X\n", rc);
-        printf("Error message : %s\n", get_latest_errmsg());
+        if (strnicmp(argv[3], "-v", 2) == 0)
+        {
+            verbose_mode = true;
+        }
+    }
+
+    printf("\n\n");
+    if (verbose_mode)
+    {
+        LOG_SETUP();
+        LOG_INFO("Entering verbose mode via standard console output and text log file creation.");
     }
     else
     {
-        printf("\n\nThe output file Result.csvm has been put into your <output_folder>.\n\n");
+        printf("\n\n");
+    }
+
+    rc = matrix_add_csv(argv[1], argv[2], verbose_mode);
+    if (rc != HResult_OK)
+    {
+        if (verbose_mode)
+        {
+            LOG_ERROR("Error code    : 0x%08X", rc);
+            LOG_ERROR("Error message : %s", get_latest_errmsg());
+        }
+        else
+        {
+            printf("Error code    : 0x%08X\n", rc);
+            printf("Error message : %s\n", get_latest_errmsg());
+        }
+    }
+    else
+    {
+        if (verbose_mode)
+        {
+            LOG_INFO("The output file Result.csv has been put into the output path: %s.", argv[2]);
+        }
+        else
+        {
+            printf("The output file Result.csv has been put into the output path: %s.\n", argv[2]);
+        }
+    }
+    printf("\n");
+
+    if (verbose_mode)
+    {
+        LOG_CLEANUP();
     }
 
 	return 0;
