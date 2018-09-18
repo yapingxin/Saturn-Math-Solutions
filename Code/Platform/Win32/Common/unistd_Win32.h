@@ -11,7 +11,7 @@
 #include <io.h>
 
 // #include <getopt.h> /* getopt at: https://gist.github.com/ashelly/7776712 */
-// #include <process.h> /* for getpid() and the exec..() family */
+#include <process.h> /* for getpid() and the exec..() family */
 
 #include <direct.h> /* for _getcwd() and _chdir() */
 
@@ -37,6 +37,8 @@
 #define isatty _isatty
 #define lseek _lseek
 #define stat _stat			// MSDN Link: https://msdn.microsoft.com/en-us/library/14h5k7ff.aspx
+#define strdup _strdup
+#define getpid _getpid
 
 #define findfirst _findfirst
 #define findnext _findnext

@@ -160,6 +160,9 @@
     <ClCompile Include="..\..\..\..\..\Code\Common\common_functions.c" />
     <ClCompile Include="..\..\..\..\..\Code\Common\DS\vector.c" />
     <ClCompile Include="..\..\..\..\..\Code\Common\FileOperation.c" />
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOG.c" />
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.c" />
+    <ClCompile Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.c" />
     <ClCompile Include="..\..\..\..\..\Code\Platform\Win32\Utilities\Common\stdafx.c" />
@@ -172,6 +175,9 @@
     <ClInclude Include="..\..\..\..\..\Code\Common\datatypes.h" />
     <ClInclude Include="..\..\..\..\..\Code\Common\DS\vector.h" />
     <ClInclude Include="..\..\..\..\..\Code\Common\FileOperation.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOG.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGC.h" />
+    <ClInclude Include="..\..\..\..\..\Code\Common\iLOG3\LOGS.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\dirent_Win32.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\iconv_Win32.h" />
     <ClInclude Include="..\..\..\..\..\Code\Platform\Win32\Common\unistd_Win32.h" />

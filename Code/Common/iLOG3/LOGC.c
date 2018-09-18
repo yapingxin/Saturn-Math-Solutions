@@ -51,7 +51,7 @@ void SetLogcFile( char *format , ... )
 	SetLogcFileV( format , valist );
 	va_end( valist );
 	
-	_g_logc_pid = getpid() ;
+    _g_logc_pid = getpid();
 	
 	return;
 }
@@ -213,7 +213,7 @@ int WriteLogcBaseV( int log_level , char *c_filename , long c_fileline , char *f
 	/* 输出行日志 */
 	if( STRCMP( _g_logc_pathfilename , == , "#stdout" ) )
 	{
-		WRITE( 1 , log_buffer , log_buflen );
+		WRITE( 1 , log_buffer , (unsigned int)log_buflen );
 	}
 	else if( _g_logc_pathfilename[0] )
 	{
@@ -227,7 +227,7 @@ int WriteLogcBaseV( int log_level , char *c_filename , long c_fileline , char *f
 		if( fd == -1 )
 			return -1;
 		
-		WRITE( fd , log_buffer , log_buflen );
+		WRITE( fd , log_buffer , (unsigned int)log_buflen );
 		
 		CLOSE( fd );
 	}
@@ -436,7 +436,7 @@ int WriteHexLogcBaseV( int log_level , char *c_filename , long c_fileline , char
 	/* 输出十六进制块日志 */
 	if( STRCMP( _g_logc_pathfilename , == , "#stdout" ) )
 	{
-		WRITE( 1 , hexlog_buffer , hexlog_buflen );
+		WRITE( 1 , hexlog_buffer , (unsigned int)hexlog_buflen );
 	}
 	else if( _g_logc_pathfilename[0] )
 	{
@@ -450,7 +450,7 @@ int WriteHexLogcBaseV( int log_level , char *c_filename , long c_fileline , char
 		if( fd == -1 )
 			return -1;
 		
-		WRITE( fd , hexlog_buffer , hexlog_buflen );
+        WRITE(fd, hexlog_buffer, (unsigned int)hexlog_buflen);
 		
 		CLOSE( fd );
 	}

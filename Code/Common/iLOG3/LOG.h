@@ -111,7 +111,7 @@ struct tm *localtime_r(const time_t *timep, struct tm *result);
 
 /* ÆäËüºê */ /* other macros */
 #ifndef MAXLEN_FILENAME
-#define MAXLEN_FILENAME		256
+#define MAXLEN_FILENAME		255
 #endif
 
 typedef struct tagLOG LOG ;

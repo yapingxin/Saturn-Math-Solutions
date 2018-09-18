@@ -18,6 +18,8 @@
 
 #include "LOG.h"
 
+#include "Common/common_functions.h"
+
 /* 日志等级描述对照表 */ /* log level describe */
 static char		sg_aszLogLevelDesc[][6+1] = { "DEBUG " , "INFO  " , "NOTICE" , "WARN  " , "ERROR " , "FATAL " , "NOLOG " } ;
 
@@ -43,7 +45,7 @@ static int CreateMutexSection( LOG *g )
 	if( g == NULL )
 		return LOG_RETURN_ERROR_PARAMETER;
 	strcpy( lock_pathfilename , "Global\\iLOG3_ROTATELOCK" );
-	g->rotate_lock = CreateMutex( NULL , FALSE , lock_pathfilename ) ;
+    g->rotate_lock = CreateMutex(NULL, FALSE, dump_LPCSTR_to_LCPTSTR(lock_pathfilename));
 	if( g->rotate_lock == NULL )
 		return LOG_RETURN_ERROR_INTERNAL;
 #elif ( defined __unix ) || ( defined _AIX ) || ( defined __linux__ ) || ( defined __hpux )
@@ -168,7 +170,7 @@ static int SetBufferSize( LOG *g , LOGBUF *logbuf , long buf_size , long max_buf
 		}
 		else
 		{
-			int	bufptr_offset = logbuf->bufptr - logbuf->bufbase ;
+            int	bufptr_offset = (int)(logbuf->bufptr - logbuf->bufbase);
 			char	*tmp = NULL ;
 			
 			nret = EnterMutexSection( g ) ;
@@ -394,7 +396,7 @@ static int OpenLog_RegisterEventSource( LOG *g , char *log_pathfilename , void *
 	if( g->open_flag == 1 )
 		return 0;
 	
-	g->hFile = RegisterEventSource( NULL , g->log_pathfilename ) ;
+    g->hFile = RegisterEventSource(NULL, dump_LPCSTR_to_LCPTSTR(g->log_pathfilename));
 	if( g->hFile == NULL )
 		return LOG_RETURN_ERROR_OPENFILE;
 	
@@ -405,7 +407,7 @@ static int OpenLog_RegisterEventSource( LOG *g , char *log_pathfilename , void *
 static int WriteLog_ReportEvent( LOG *g , void **open_handle , int log_level , char *buf , long len , long *writelen )
 {
 	unsigned short	event_log_level ;
-	char		*ptr = NULL ;
+	TCHAR *ptr = NULL ;
 	
 	if( g == NULL )
 		return LOG_RETURN_ERROR_PARAMETER;
@@ -427,8 +429,8 @@ static int WriteLog_ReportEvent( LOG *g , void **open_handle , int log_level , c
 		event_log_level = EVENTLOG_ERROR_TYPE ;
 	else
 		event_log_level = EVENTLOG_ERROR_TYPE ;
-	ptr = buf ;
-	ReportEvent( g->hFile , event_log_level , 0 , 0 , NULL , 1 , 0 , & ptr , NULL );
+    ptr = (TCHAR*)dump_LPCSTR_to_LCPTSTR(buf);
+    ReportEvent(g->hFile, event_log_level, 0, 0, NULL, 1, 0, &ptr, NULL);
 	
 	return 0;
 }
@@ -600,7 +602,7 @@ int ExpandPathFilename( char *pathfilename , long pathfilename_bufsize )
 	char		*env_val = NULL ;
 	long		env_val_len ;
 	
-	pathfilename_len = strlen(pathfilename) ;
+	pathfilename_len = (long)strlen(pathfilename) ;
 	
 	p1 = strchr( pathfilename , '$' );
 	while( p1 )
@@ -611,13 +613,13 @@ int ExpandPathFilename( char *pathfilename , long pathfilename_bufsize )
 			return LOG_RETURN_ERROR_PARAMETER;
 		
 		memset( env_key , 0x00 , sizeof(env_key) );
-		env_key_len = p2 - p1 + 1 ;
+        env_key_len = (long)(p2 - p1 + 1);
 		strncpy( env_key , p1 + 1 , env_key_len - 2 );
 		env_val = getenv( env_key ) ;
 		if( env_val == NULL )
 			return LOG_RETURN_ERROR_PARAMETER;
 		
-		env_val_len = strlen(env_val) ;
+		env_val_len = (long)strlen(env_val) ;
 		if( pathfilename_len + ( env_val_len - env_key_len ) > pathfilename_bufsize-1 )
 			return LOG_RETURN_ERROR_PARAMETER;
 		
@@ -944,7 +946,7 @@ static int LogStyle_SEPARATOR2( LOG *g , LOGBUF *logbuf , char *c_filename , lon
 static int LogStyle_DATE( LOG *g , LOGBUF *logbuf , char *c_filename , long c_fileline , int log_level , char *format , va_list valist )
 {
 	if( g->cache1_tv.tv_sec == 0 )
-		g->cache1_tv.tv_sec = time( NULL ) ;
+		g->cache1_tv.tv_sec = (long)time( NULL ) ;
 	if( g->cache1_tv.tv_sec != g->cache2_logstyle_tv.tv_sec )
 	{
 		LOCALTIME( g->cache1_tv.tv_sec , g->cache1_stime )
@@ -964,8 +966,8 @@ static int LogStyle_DATE( LOG *g , LOGBUF *logbuf , char *c_filename , long c_fi
 
 static int LogStyle_DATETIME( LOG *g , LOGBUF *logbuf , char *c_filename , long c_fileline , int log_level , char *format , va_list valist )
 {
-	if( g->cache1_tv.tv_sec == 0 )
-		g->cache1_tv.tv_sec = time( NULL ) ;
+    if (g->cache1_tv.tv_sec == 0)
+        g->cache1_tv.tv_sec = (long)time(NULL);
 	if( g->cache1_tv.tv_sec != g->cache2_logstyle_tv.tv_sec )
 	{
 		LOCALTIME( g->cache1_tv.tv_sec , g->cache1_stime )
@@ -1371,7 +1373,7 @@ static int RotateLogFileSize( LOG *g , long step )
 		nret = RENAME( g->log_pathfilename , rotate_log_pathfilename ) ;
 		if( nret )
 		{
-			UNLINK( rotate_log_pathfilename );
+            UNLINK(dump_LPCSTR_to_LCPTSTR(rotate_log_pathfilename));
 			RENAME( g->log_pathfilename , rotate_log_pathfilename ) ;
 		}
 		
@@ -1418,7 +1420,7 @@ static int RotateLogFilePerDate( LOG *g )
 		return nret;
 	
 	if( g->cache1_tv.tv_sec == 0 )
-		g->cache1_tv.tv_sec = time( NULL ) ;
+		g->cache1_tv.tv_sec = (long)time( NULL ) ;
 	if( g->cache1_stime.tm_mday == 0 )
 		LOCALTIME( g->cache1_tv.tv_sec , g->cache1_stime )
 	
@@ -1481,7 +1483,7 @@ static int RotateLogFilePerHour( LOG *g )
 		return nret;
 	
 	if( g->cache1_tv.tv_sec == 0 )
-		g->cache1_tv.tv_sec = time( NULL ) ;
+		g->cache1_tv.tv_sec = (long)time( NULL ) ;
 	if( g->cache1_stime.tm_mday == 0 )
 		LOCALTIME( g->cache1_tv.tv_sec , g->cache1_stime )
 	

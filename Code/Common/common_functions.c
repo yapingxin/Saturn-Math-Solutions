@@ -1,4 +1,5 @@
 #include "common_functions.h"
+#include <string.h>
 #include <math.h>
 
 
@@ -45,3 +46,23 @@ void get_precision_round(double* p_Value, const double x, const uint8_t k)
 		*p_Value = ceil(factor * x - 0.5) / factor;
 	}
 }
+
+
+#ifdef _WIN32
+// Shall fix for UTF-8
+const TCHAR* dump_LPCSTR_to_LCPTSTR(const char* str)
+{
+    static TCHAR buf[256];
+
+    size_t len = strlen(str);
+    size_t index;
+
+    memset(buf, 0, 256 * sizeof(TCHAR));
+    for (index = 0; index < len; index++)
+    {
+        buf[index] = str[index];
+    }
+
+    return buf;
+}
+#endif

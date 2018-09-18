@@ -57,10 +57,11 @@
 // =======================================
 // Definition and macros for HResult
 // ---------------------------------------
-//typedef uint32_t HResult;
-#ifndef HResult
-    #define HResult uint32_t
-#endif
+
+typedef uint32_t HResult;
+//#ifndef HResult
+//    #define HResult uint32_t
+//#endif
 
 #define PASS 1
 #define FAIL 0
@@ -94,6 +95,7 @@
 #define HResult_OBJECT_IS_NULL      0x00190000
 #define HResult_STRING_TOOLONG      0x001A0000
 #define HResult_DECODE_FAIL         0x001B0000
+#define HResult_LOG_SETUP_FAIL      0x001C0000
 
 // =======================================
 
