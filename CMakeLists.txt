@@ -67,9 +67,9 @@ SET ( SRC_LIST_Matrix_CSV_SHARDLIB
     Code/Common/DS/vector.c
     
     # iLOG3 is for pure C logging
-    # Code/Common/iLOG3/LOG.c
-    # Code/Common/iLOG3/LOGC.c
-    # Code/Common/iLOG3/LOGS.c
+    Code/Common/iLOG3/LOG.c
+    Code/Common/iLOG3/LOGC.c
+    Code/Common/iLOG3/LOGS.c
     
     Code/Common/common_functions.c
     Code/Common/FileOperation.c
