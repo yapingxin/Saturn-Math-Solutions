@@ -24,6 +24,7 @@
 int main(int argc, char* argv[])
 {
     HResult rc = HResult_Unknown;
+    bool verbose_mode = false;
 
     if (argc < 3)
     {
@@ -32,14 +33,14 @@ int main(int argc, char* argv[])
 #ifdef _WIN32
         printf("Usage: Matrix-CSV-Integration.exe <input_folder> <output_folder>\n\n");
 #else
-        printf("Usage: ./Matrix-CSV-Integration <input_folder> <output_folder>\n\n");
+        printf("Usage: ./Matrix-CSV-Integration <input_folder> <output_folder> [-v]\n\n");
 #endif
         printf("Abort.\n\n");
 
         exit(-1);
     }
 
-    rc = matrix_add_csv(argv[1], argv[2]);
+    rc = matrix_add_csv(argv[1], argv[2], verbose_mode);
     if (rc != HResult_OK)
     {
         printf("Error code    : 0x%08X\n", rc);

@@ -32,7 +32,7 @@ const char* get_latest_errmsg()
 //      HResult_FILE_CannotWrite  0x00130004 | The path of out_folder cannot be written;
 //      HResult_DIR_LOOKUP_FAILED 0x00130008 | Failed when lookup the path of in_folder for files;
 //      HResult_OBJECT_IS_NULL|1  0x00190001 | Lookup in_folder but no .csv file found;
-HResult matrix_add_csv(const char* in_folder, const char* out_folder)
+HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool verbose_mode)
 {
     HResult rc = HResult_OK;
     HResult decode_rc = HResult_OK;
@@ -126,10 +126,10 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder)
     rc = matrix_save(p_result_matrix, out_folder);
 
 EXIT_VEC_RESOURCES:
-    
+
     CSV_Parse_Info_Cleanup(p_result_matrix);
     free(p_result_matrix);
-    
+
     vector_clear(&vector_filepath);
     vector_destroy(&vector_filepath);
 
