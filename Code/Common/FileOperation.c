@@ -80,6 +80,8 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
     struct dirent *ptr;
     DIR *dir = NULL;
 
+    printf("[lookup_dir_files] opendir: %s\n", folder);
+
     dir = opendir(folder);
     if (dir == NULL)
     {
@@ -87,8 +89,12 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
         goto EXIT;
     }
 
+    printf("[lookup_dir_files] readdir(dir)\n");
+
     while ((ptr = readdir(dir)) != NULL)
     {
+        printf("[lookup_dir_files] ptr->d_name: %s\n", ptr->d_name);
+
         // ignore "." and ".."
         if (ptr->d_name[0] == '.')
         {

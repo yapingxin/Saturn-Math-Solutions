@@ -307,6 +307,8 @@ static void lookup_subfiles_callback(const char* filename, void* data)
     size_t filename_len = 0;
     Vector* vector;
     FileName filename_st;
+
+    LOG_INFO("[lookup_subfiles_callback] filename: %s", filename);
     
     if (filename == NULL || data == NULL)
     {
