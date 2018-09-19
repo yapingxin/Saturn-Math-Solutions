@@ -215,7 +215,7 @@ static uint32_t get_cols_count_by_comma(char* data_begin, char* data_lend)
     uint32_t count = 0;
     char* pos = data_begin;
 
-    if (data_begin + 1 >= data_lend)
+    if (data_begin >= data_lend)
     {
         goto EXIT;
     }
@@ -253,7 +253,7 @@ static HResult get_double_elem_by_comma(char* data_begin, char* data_lend, uint3
     const char comma = ',';
     char* pos = data_begin;
 
-    if (data_begin + 1 >= data_lend)
+    if (data_begin >= data_lend)
     {
         rc = HResult_DECODE_FAIL;
         goto EXIT;
