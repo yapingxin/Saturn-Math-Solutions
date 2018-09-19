@@ -82,6 +82,15 @@ HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, 
 
     printf("[lookup_dir_files] opendir: %s\n", folder);
 
+    if (callback == NULL)
+    {
+        printf("[lookup_dir_files] callback is NULL.\n");
+    }
+    else
+    {
+        printf("[lookup_dir_files] callback is provided.\n");
+    }
+
     dir = opendir(folder);
     if (dir == NULL)
     {
