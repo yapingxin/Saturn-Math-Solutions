@@ -135,6 +135,82 @@ EXIT:
 }
 
 
+HResult lookup_dir_files_filter(const char* folder, Vector* vector, const char* expected_ext)
+{
+    HResult rc = HResult_OK;
+    struct dirent *ptr;
+    DIR *dir = NULL;
+
+    const size_t expected_ext_len = strlen(expected_ext);
+    size_t filename_len = 0;
+    FileName filename_st;
+
+    printf("[lookup_dir_files_filter] opendir: %s\n", folder);
+
+    if (vector == NULL)
+    {
+        printf("[lookup_dir_files_filter] vector is NULL.\n");
+    }
+    else
+    {
+        printf("[lookup_dir_files_filter] vector is provided.\n");
+    }
+
+    dir = opendir(folder);
+    if (dir == NULL)
+    {
+        rc = HResult_DIR_LOOKUP_FAILED;
+        goto EXIT;
+    }
+
+    printf("[lookup_dir_files_filter] readdir(dir)\n");
+
+    while ((ptr = readdir(dir)) != NULL)
+    {
+        printf("[lookup_dir_files_filter] ptr->d_name: %s\n", ptr->d_name);
+
+        // ignore "." and ".."
+        if (ptr->d_name[0] == '.')
+        {
+#ifdef _WIN32
+            free(ptr);
+#endif
+            continue;
+        }
+
+        if (ptr->d_type == DT_REG)
+        {
+            printf("[lookup_dir_files_filter] [ptr->d_type == DT_REG] ptr->d_name: %s\n", ptr->d_name);
+
+            filename_len = strlen(ptr->d_name);
+            if (filename_len > expected_ext_len)
+            {
+                if (strnicmp(ptr->d_name + filename_len - expected_ext_len, expected_ext, expected_ext_len) == 0)
+                {
+                    printf("[lookup_dir_files_filter] vector_push_back: %s\n", ptr->d_name);
+
+                    memset(&filename_st, 0, sizeof(FileName));
+                    strncpy(filename_st.data, ptr->d_name, filename_len);
+
+                    vector_push_back(vector, &filename_st);
+                }
+            }
+        }
+
+#ifdef _WIN32
+        free(ptr);
+#endif
+    }
+
+EXIT:
+    if (dir)
+    {
+        closedir(dir);
+    }
+    return rc;
+}
+
+
 
 // Return values:
 //	    HResult_OK                         1 | Success;

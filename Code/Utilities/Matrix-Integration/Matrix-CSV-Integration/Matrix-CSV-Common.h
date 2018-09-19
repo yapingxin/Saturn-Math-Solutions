@@ -3,20 +3,14 @@
 
 #include "Common/datatypes.h"
 
-#define FILENAME_BUF_SIZE   256
+#include "Common/FileOperation.h"
+
 #define FULLPATH_BUF_SIZE   512
 #define FILENAME_VEC_PRECAP 16
 
-
 typedef struct
 {
-    char data[FILENAME_BUF_SIZE];
-} FileName;
-
-
-typedef struct
-{
-    char data[FILENAME_BUF_SIZE];
+    char data[FULLPATH_BUF_SIZE];
 } FullPath;
 
 

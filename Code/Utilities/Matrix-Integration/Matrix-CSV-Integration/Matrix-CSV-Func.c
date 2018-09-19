@@ -73,7 +73,8 @@ HResult matrix_add_csv(const char* in_folder, const char* out_folder, const bool
 
     vector_setup(&vector_filepath, FILENAME_VEC_PRECAP, sizeof(FileName));
 
-    rc = lookup_dir_files(in_folder, lookup_subfiles_callback, &vector_filepath);
+    // rc = lookup_dir_files(in_folder, lookup_subfiles_callback, &vector_filepath);
+    rc = lookup_dir_files_filter(in_folder, &vector_filepath, ".csv");
     if (rc != HResult_OK)
     {
         // will get the error code HResult_DIR_LOOKUP_FAILED

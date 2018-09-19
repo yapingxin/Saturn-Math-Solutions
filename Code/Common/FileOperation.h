@@ -2,6 +2,14 @@
 #define _INC_CLANG_COMMON_FileOperation_H
 
 #include "datatypes.h"
+#include "Common/DS/vector.h"
+
+#define FILENAME_BUF_SIZE   256
+
+typedef struct
+{
+    char data[FILENAME_BUF_SIZE];
+} FileName;
 
 typedef void (*lookup_dir_file_callback)(const char* filename, void* data);
 
@@ -9,6 +17,8 @@ typedef void (*lookup_dir_file_callback)(const char* filename, void* data);
 //      HResult_OK      | Success
 //      HResult_FAILED  | Failed
 HResult lookup_dir_files(const char* folder, lookup_dir_file_callback callback, void* data);
+
+HResult lookup_dir_files_filter(const char* folder, Vector* vector, const char* expected_ext);
 
 /* returns UInt32_NOP on error. */
 size_t get_filesize(const char* filename);
